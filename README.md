@@ -54,6 +54,6 @@ domain: ORGANIZATION_DOMAIN
 ## :pushpin: Todo
 |Status|Task|
 |------|----|
-| [x] |Initial commit|
-| [ ] |Show submitted/unsubmitted status of assignments|
-| [ ] |Creata a savnac web application|
+|:white_check_mark:|Initial commit|
+|:black_square_button:|Show submitted/unsubmitted status of assignments|
+|:black_square_button:|Creata a savnac web application|
