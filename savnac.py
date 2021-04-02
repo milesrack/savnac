@@ -72,7 +72,7 @@ def config():
 		global api_token
 		global domain
 		path = getPath()
-		config_file = path+'config.yml'
+		config_file = path + 'config.yml'
 		try:
 			with open(config_file) as config:
 				doc = yaml.load(config, Loader=yaml.FullLoader)
@@ -96,11 +96,29 @@ def config():
 		clear()
 		sys.exit()
 
+# Checks if a course listing has assingments or announcements in it
+def getNotEmpty(course):
+	assignment_url = 'https://' + domain + '/api/v1/courses/' + str(course) + '/assignments/'
+	assignment_params = {'access_token':api_token,'order_by':'due_at','per_page':'100','include':['submission']}
+	assignment_req = requests.get(assignment_url,assignment_params)
+	assignment_data = assignment_req.json()
+
+	announcement_url = 'https://' + domain + '/api/v1/announcements/'
+	announcement_params = {'access_token':api_token,'context_codes[]':str(course),'per_page':'100'}
+	announcement_req = requests.get(announcement_url,announcement_params)
+	announcement_data = announcement_req.json()
+	
+	if len(assignment_data) > 0 or len(announcement_data) > 0:
+		not_empty = len(assignment_data) + len(announcement_data)
+	else:
+		not_empty = 0
+	return str(not_empty)
+
 # Lists currently enroled courses and returns a valid selection
 def getCourses():
 	clear()
 	url = 'https://' + domain + '/api/v1/courses/'
-	params = {'access_token':api_token,'enrollment_state':'active','per_page':'100'}
+	params = {'access_token':api_token,'enrollment_state':'active','exclude_blueprint_courses':'true','per_page':'100'}
 	try:
 		r = requests.get(url,params)
 	except OSError:
@@ -112,7 +130,8 @@ def getCourses():
 		course_id = data[i]['id']
 		course_name = data[i]['name']
 		course_list.append([course_id,course_name])
-		menu_item = str('{:02d}'.format(i+1)) + ') ' + course_name
+		#has_stuff = getNotEmpty(course_id)
+		menu_item = str('{:02d}'.format(i+1)) + ') ' + course_name # + ' [' + has_stuff + ']'
 		print(green(menu_item))
 	print(red('99) Exit'))
 	while True:
@@ -171,12 +190,12 @@ def getAnnouncements(course):
 	date = announcement_list[selection-1][2]
 	description = announcement_list[selection-1][3]
 	if description == None:
-		description = 'None'
+		description = ''
 	else:
 		description =  BeautifulSoup(description,'lxml')
 		description = removeTags(str(description.body))
 	if date == None:
-		post_date = 'None'
+		post_date = ''
 	else:
 		post_date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
 	announcement_url = 'https://' + domain + '/courses/' + str(course) + '/discussion_topics/' + str(_id)
@@ -188,11 +207,55 @@ def getAnnouncements(course):
 	input('\nPress ENTER to continue...')
 	getAnnouncements(course)
 
+# Color codes an assignment's score
+def colorCodeScore(score,points_possible):
+	if score != '-' and points_possible != 0:
+		percentage = (score/points_possible)*100
+		if percentage >= 80:
+			color_score = green(score)
+		elif percentage >= 60:
+			color_score = yellow(score)
+		else:
+			color_score = red(score)
+		return color_score
+	else:
+		return '-'
+# Fetches submission status of an assignment and assignes a symbol to it
+def getSubmissionStatus(assignment):
+	status = assignment['submission']['workflow_state']
+	
+	if 'score' in assignment['submission'].keys() and assignment['submission']['score'] != None:
+		score = assignment['submission']['score']
+	else:
+		score = '-'
+	if assignment['points_possible'] != None:
+		points_possible = assignment['points_possible']
+	else:
+		points_possible = '-'
+	color_coded_score = colorCodeScore(score,points_possible)
+	if points_possible != '-':
+		points_possible = green(points_possible)
+	grade = str(color_coded_score) + '/' + str(points_possible)
+
+	if status == 'submitted':
+		symbol = yellow('[') + green('\u2713') + yellow(']')
+		text = green('Submitted')
+	elif status == 'unsubmitted':
+		symbol = yellow('[') + red('\u2717') + yellow(']')
+		text = red('Unsubmitted')
+	elif status == 'graded':
+		symbol = yellow('[') + blue('\u2713') + yellow(']')
+		text = blue('Graded')
+	else:
+		symbol = yellow('[') + magenta('?') + yellow(']')
+		text = magenta(status.capitalize())
+	return [symbol,text,grade]
+
 # Lists assignments that are not yet due for the selected course
 def getAssignments(course):
 	clear()
 	url = 'https://' + domain + '/api/v1/courses/' + str(course) + '/assignments/'
-	params = {'access_token':api_token,'order_by':'due_at','bucket':'future','per_page':'100'}
+	params = {'access_token':api_token,'order_by':'due_at','per_page':'100','include':['submission']} #'bucket':'future',
 	try:
 		r = requests.get(url, params)
 	except OSError:
@@ -206,8 +269,9 @@ def getAssignments(course):
 		assignment_due_date = data[i]['due_at']
 		assignment_name = data[i]['name']
 		assignment_description = data[i]['description']
-		assignment_list.append([assignment_id,assignment_due_date,assignment_name,assignment_description])
-		menu_item = str('{:02d}'.format(i+1)) + ') ' + assignment_name
+		assignment_status = getSubmissionStatus(data[i])
+		assignment_list.append([assignment_id,assignment_due_date,assignment_name,assignment_description,assignment_status[1],assignment_status[2]])
+		menu_item = str('{:02d}'.format(i+1)) + ') ' + assignment_name + ' ' + assignment_status[0]
 		print(yellow(menu_item))
 	print(red('99) Back'))
 	while True:
@@ -228,20 +292,24 @@ def getAssignments(course):
 	_id = assignment_list[selection-1][0]
 	due = assignment_list[selection-1][1]
 	title = assignment_list[selection-1][2]
+	status = assignment_list[selection-1][4]
+	grade = assignment_list[selection-1][5]
 	assignment_url = 'https://' + domain + '/courses/' + str(course) + '/assignments/' + str(_id)
 	if due == None:
-		due_date = 'None'
+		due_date = ''
 	else:
 		due_date = datetime.strptime(due, "%Y-%m-%dT%H:%M:%SZ")
 	description = assignment_list[selection-1][3]
-	if description == None:
-		description = 'None'
+	if description == None or description == '':
+		description = ''
 	else:
 		description =  BeautifulSoup(description,'lxml')
 		description = removeTags(str(description.body))
 	clear()
 	print(yellow(title))
-	print('Due:',green(due_date))
+	print('Due date:',green(due_date))
+	print('Status:',status)
+	print('Grade:',grade)
 	print('URL:',cyan(assignment_url))
 	print('Description:',description)
 	input('\nPress ENTER to continue...')

@@ -1,4 +1,5 @@
 # savnac
+<img alt="Python" src="https://img.shields.io/badge/python%20-%2314354C.svg?&style=for-the-badge&logo=python&logoColor=white"/>
 A command line tool to view assignments and announcements for Canvas courses.
 
 ## :pushpin: Prerequisites
@@ -52,8 +53,6 @@ domain: ORGANIZATION_DOMAIN
 ```
 
 ## :pushpin: Todo
-|Status|Task|
-|------|----|
-|:white_check_mark:|Initial commit|
-|:black_square_button:|Show submitted/unsubmitted status of assignments|
-|:black_square_button:|Creata a savnac web application|
+- [x] Initial commit
+- [x] Show submitted/unsubmitted status of assignments
+- [ ] Creata a savnac web application
