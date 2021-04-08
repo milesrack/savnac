@@ -133,14 +133,14 @@ def getCourses():
 		#has_stuff = getNotEmpty(course_id)
 		menu_item = str('{:02d}'.format(i+1)) + ') ' + course_name # + ' [' + has_stuff + ']'
 		print(green(menu_item))
-	print(red('99) Exit'))
+	print(red('Exit'))
 	while True:
 		try:
-			selection = int(input('Select a course: '))
-			if selection == 99:
+			selection = input('Select a course: ')
+			if selection == 'Exit' or selection == 'exit' or selection == 'E' or selection == 'e':
 				clear()
 				sys.exit()
-			elif selection < 1 or selection > len(course_list):
+			elif int(selection) < 1 or int(selection) > len(course_list):
 				invalid()
 				continue
 			else:
@@ -148,7 +148,7 @@ def getCourses():
 		except ValueError:
 			invalid()
 			continue
-	return course_list[selection-1][0]
+	return course_list[int(selection)-1][0]
 
 # Get announcements for a specific course
 def getAnnouncements(course):
@@ -171,13 +171,13 @@ def getAnnouncements(course):
 		announcement_list.append([announcement_id,announcement_title,announcement_date,announcement_body])
 		menu_item = str('{:02d}'.format(i+1)) + ') ' + announcement_title
 		print(magenta(menu_item))
-	print(red('99) Back'))
+	print(red('Back'))
 	while True:
 		try:
-			selection = int(input('Select an announcement: '))
-			if selection == 99:
+			selection = input('Select an announcement: ')
+			if selection == 'Back' or selection == 'back' or selection == 'B' or selection == 'b':
 				getAssignments(course)
-			elif selection < 1 or selection > len(announcement_list):
+			elif int(selection) < 1 or int(selection) > len(announcement_list):
 				invalid()
 				continue
 			else:
@@ -185,10 +185,10 @@ def getAnnouncements(course):
 		except ValueError:
 			invalid()
 			continue
-	_id = announcement_list[selection-1][0]
-	title = announcement_list[selection-1][1]
-	date = announcement_list[selection-1][2]
-	description = announcement_list[selection-1][3]
+	_id = announcement_list[int(selection)-1][0]
+	title = announcement_list[int(selection)-1][1]
+	date = announcement_list[int(selection)-1][2]
+	description = announcement_list[int(selection)-1][3]
 	if description == None:
 		description = ''
 	else:
@@ -273,15 +273,15 @@ def getAssignments(course):
 		assignment_list.append([assignment_id,assignment_due_date,assignment_name,assignment_description,assignment_status[1],assignment_status[2]])
 		menu_item = str('{:02d}'.format(i+1)) + ') ' + assignment_name + ' ' + assignment_status[0]
 		print(yellow(menu_item))
-	print(red('99) Back'))
+	print(red('Back'))
 	while True:
 		try:
-			selection = int(input('Select an assignment: '))
-			if selection == 0:
-				getAnnouncements(course)
-			elif selection == 99:
+			selection = input('Select an assignment: ')
+			if selection == 'Back' or selection == 'back' or selection == 'B' or selection == 'b':
 				main()
-			elif selection < 1 or selection > len(assignment_list):
+			if int(selection) == 0:
+				getAnnouncements(course)
+			elif int(selection) < 1 or int(selection) > len(assignment_list):
 				invalid()
 				continue
 			else:
@@ -289,17 +289,17 @@ def getAssignments(course):
 		except ValueError:
 			invalid()
 			continue
-	_id = assignment_list[selection-1][0]
-	due = assignment_list[selection-1][1]
-	title = assignment_list[selection-1][2]
-	status = assignment_list[selection-1][4]
-	grade = assignment_list[selection-1][5]
+	_id = assignment_list[int(selection)-1][0]
+	due = assignment_list[int(selection)-1][1]
+	title = assignment_list[int(selection)-1][2]
+	status = assignment_list[int(selection)-1][4]
+	grade = assignment_list[int(selection)-1][5]
 	assignment_url = 'https://' + domain + '/courses/' + str(course) + '/assignments/' + str(_id)
 	if due == None:
 		due_date = ''
 	else:
 		due_date = datetime.strptime(due, "%Y-%m-%dT%H:%M:%SZ")
-	description = assignment_list[selection-1][3]
+	description = assignment_list[int(selection)-1][3]
 	if description == None or description == '':
 		description = ''
 	else:
