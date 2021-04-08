@@ -2,35 +2,6 @@
 <img alt="Python" src="https://img.shields.io/badge/python%20-%2314354C.svg?&style=for-the-badge&logo=python&logoColor=white"/>
 A command line tool to view assignments and announcements for Canvas courses.
 
-## :pushpin: Prerequisites
-### :computer: Windows
-[Python 3](https://www.python.org/downloads/)
-### :computer: MacOS
-```
-brew install python3
-```
-### :computer: Linux
-#### Debian / Ubuntu / Linux Mint
-```
-sudo apt-get install python3
-sudo apt-get install python3-pip
-```
-#### Fedora
-```
-sudo dnf install python3
-sudo dnf install python3-pip
-```
-#### Redhat / RHEL / CentOS
-```
-sudo yum install python3
-sudo yum install python3-pip
-```
-#### Arch Linux
-```
-sudo pacman -S python
-sudo pacman -S python-pip
-```
-
 ## :pushpin: Installation
 ```
 git clone https://github.com/milesrack/savnac.git
