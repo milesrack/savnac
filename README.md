@@ -29,3 +29,5 @@ domain: ORGANIZATION_DOMAIN
 |:heavy_check_mark:|Initial commit|
 |:heavy_check_mark:|Show submitted/unsubmitted status of assignments|
 ||Creata a savnac web application|
+||Creata a savnac Android application|
+||Creata a savnac IOS application|
