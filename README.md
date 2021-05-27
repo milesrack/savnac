@@ -7,7 +7,7 @@ A command line tool to view assignments and announcements for Canvas courses.
 
 ## :pushpin: Installation
 ```
-git clone https://github.com/milesrack/savnac.git
+git clone https://github.com/MC-Software-Solutions/savnac.git
 cd savnac
 pip3 install -r requirements.txt
 ```
