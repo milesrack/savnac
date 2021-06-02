@@ -12,5 +12,5 @@
 ## Projects
 |**Project**|**Description**|
 |-|-|
-|[savnac-cli](/savnac-cli/README.md)|A command line client to view assignments and announcements for canvas courses.|
-|[savnac-web](/savnac-web/README.md)|The source code for [savnac.xyz](http://savnac.xyz), a lightweight canvas client.|
+|[savnac-cli](/savnac-cli/)|A command line client to view assignments and announcements for canvas courses.|
+|[savnac-web](/savnac-web/)|The source code for [savnac.xyz](http://savnac.xyz), a lightweight canvas client.|
