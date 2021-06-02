@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quantico&display=swap');
+
+body{
+  font-family: 'Quantico', sans-serif;
+  background: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+body p, ol{
+  font-size: 20px;
+  color: #171a1d;
+  margin-top: 20px;
+}
+.container{
+  margin-top: 20px;
+}
+.navbar{
+  width: 100%;
+}
+.navbar-brand{
+  margin-left: 20px;
+}
+.navbar-nav{
+  margin-left: auto;
+  margin-right: 20px;
+}
+.home h1{
+  text-align: center;
+  font-size: 100px;
+  margin-top: 50px;
+  text-transform: uppercase;
+}
+.home p{
+  text-align: center;
+  font-size: 40px;
+}
+.home img{
+  margin-left: auto; 
+  margin-right: auto; 
+  display: block; 
+  width: 600px;
+}
+@media only screen and (max-width: 450px){
+  .home h1{
+    font-size: 80px;
+  }
+  .home p{
+    font-size: 32px;
+  }
+  .home img{
+    width: 300px;
+  }
+}
+.box{
+  border-radius: 20px;
+  width: 320px;
+  padding: 40px;
+  display: block;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: #212529;
+  text-align: center;
+}
+@media only screen and (max-height: 850px){
+  .box{
+    margin-top: 60px;
+  }
+}
+@media only screen and (max-height: 800px){
+  .box{
+    margin-top: 90px;
+  }
+}
+@media only screen and (max-height: 700px){
+  .box{
+    margin-top: 120px;
+  }
+}
+.box h1{
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.box input[type = "text"],.box input[type = "password"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.box input[type = "text"]:focus,.box input[type = "password"]:focus{
+  width: 220px;
+  border-color: #2ecc71;
+}
+.box button[type = "submit"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #2ecc71;
+  padding: 14px 40px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer;
+}
+button[type='submit']{
+  background: #2ecc71;
+  border: 0px solid #2ecc71;
+  border-radius: 24px;
+  padding: 10px;
+}
+.box button[type = "submit"]:hover{
+  background: #2ecc71;
+}
+.get-started{
+  width: 200px;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 20px;
+  border: 2px solid #2ecc71;
+  background: #2ecc71;
+  text-decoration: none;
+  color: white;
+}
+.card{
+  min-width: 300px;
+  min-height: 140px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  background: #f3faff;
+}
+.card-body{
+  color: #171a1d;
+  text-align: left;
+}
+.card:hover{
+  background: #e6f4ff;
+  transition: 1s;
+}

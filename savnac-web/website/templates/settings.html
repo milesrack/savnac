@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+<!--Below is the code that routes user information from our database to be displayed-->
+<div class="container">
+	<form action='' method='POST'>
+    	<h1>Settings</h1>
+    	<label for='api_token' style='margin-top: 20px;'><b>API token:</b></label><br>
+    	<input type='text' id='api_token' name='api_token' value='{{user.api_token}}' style='width: 100%;'><br>
+		<label for='domain' style='margin-top: 20px;'><b>Organization domain:</b></label><br>
+    	<input type='text' id='domain' name='domain' value='{{user.domain}}' style='width: 100%;'><br>
+    	{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+		    	{% for category, message in messages %}
+		        	{% if category == 'settings-error' %}
+		        	<br><b style='color:#d81818;'>{{ message }}</b><br>
+		        	{% elif category == 'settings-success' %}
+		        	<br><b style='color:#2ecc71;'>{{ message }}</b><br>
+		        	{% endif %}
+		    	{% endfor %}
+			{% endif %}
+		{% endwith %}
+    	<button type='submit' style='margin-top: 20px;'>Change settings</button>
+	</form>
+</div>
+<br>
+<div class='container'>
+	<form action='/change_password' method='POST'>
+    	<h1>Change password</h1>
+    	<label for='current_password' style='margin-top: 20px;'><b>Current password:</b></label><br>
+    	<input type='password' id='current_password' name='current_password' style='width: 100%;'><br>
+    	<label for='new_password' style='margin-top: 20px;'><b>New password:</b></label><br>
+    	<input type='password' id='new_password' name='new_password' style='width: 100%;'><br>
+		<label for='confirm_new_password' style='margin-top: 20px;'><b>Confirm new password:</b></label><br>
+    	<input type='password' id='confirm_new_password' name='confirm_new_password' style='width: 100%;'><br>
+    	{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+		    	{% for category, message in messages %}
+		        	{% if category == 'password-error' %}
+		        	<br><b style='color:#d81818;'>{{ message }}</b><br>
+		        	{% elif category == 'password-success' %}
+		        	<br><b style='color:#2ecc71;'>{{ message }}</b><br>
+		        	{% endif %}
+		    	{% endfor %}
+			{% endif %}
+		{% endwith %}
+    	<button type='submit' style='margin-top: 20px;'>Change password</button>
+	</form>
+</div>
+{% endblock %}

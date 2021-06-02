@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section id='feedback'>
+	<div class='container'>
+	  <div class='feedback'>
+	    <form action='' method='POST' style='padding: 20px;'>
+	    	<h1>Feedback</h1>
+	    	<label for='fname' style='margin-top: 20px;'><b>First name:</b></label><br>
+	    	<input type='text' id='fname' name='fname' placeholder='John' style='width: 200px;'><br>
+	    	<label for='lname' style='margin-top: 20px;'><b>Last name:</b></label><br>
+	    	<input type='text' id='lname' name='lname' placeholder='Doe' style='width: 200px;'><br>
+	    	<label for='name' style='margin-top: 20px;' style='margin-top: 20px;'><b>Email:</b></label><br>
+	    	<input type='text' id='email' name='email' placeholder='johndoe@example.com' style='width: 200px;'><br>
+	    	<label for='name' style='margin-top: 20px;'><b>Feedback:</b></label><br>
+	    	<textarea type='text' id='feedback' name='feedback' placeholder='The site is great!' style='width: 100%; height: 100%;'></textarea><br>
+	    	{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+			    	{% for category, message in messages %}
+			        	{% if category == 'feedback-error' %}
+			        	<br><b style='color:#d81818;'>{{ message }}</b><br>
+			        	{% elif category == 'feedback-success' %}
+			        	<br><b style='color:#2ecc71;'>{{ message }}</b><br>
+			        	{% endif %}
+			    	{% endfor %}
+				{% endif %}
+			{% endwith %}
+	    	<button type='submit' style='margin-top: 20px;'>Submit</button>
+	    </form>
+	  </div>
+	</div>
+</section>
+{% endblock %}

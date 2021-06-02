@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Assignments{% endblock %}
+{% block content %}
+<section id='assignments'>
+	<div class='container'>
+		<div class='row'>
+			{% for item in data %}
+			<div class='col-md-6 col-lg-4'>
+				<a href='/courses/{{course_id}}/assignments/{{item[0]}}' style='text-decoration: none; color: #191919;'>
+				<div class='card'>
+					<div class='card-body'>
+						<h5>{{item[1]}}</h5>
+						<h6><b>Due:</b> {{item[2]}}</h6>
+						<h6><b>Points:</b> {{item[3]}}</h6>
+						<h6><b>Status:</b> {{item[4]}}</h6>
+					</div>
+				</div>
+				</a>
+			</div>
+			{% endfor %}
+		</div>
+		{% if not data %}
+		<h1 style='text-align: center;'>No assignments here!</h1>
+		<meta http-equiv='refresh' content='2; URL=/courses?assignments=1'>
+		{% endif %}
+	</div>
+</section>
+{% endblock %}

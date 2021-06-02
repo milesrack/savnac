@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Help{% endblock %}
+{% block content %}
+<section id='help'>
+	<div class='container'>
+		<h1>API token</h1>
+		<ol>
+			<li>Log into canvas.</li>
+			<li>Navigate to <code>Account</code> -> <code>Settings</code> using the navbar on the left of the screen.</li>
+			<li>Scroll down and press the <code>New Access Token</code> button.</li>
+			<li>Write anything in the purpose field and click <code>Generate Token</code>.</li>
+		</ol>
+		<p>You can also refer to the <a href='https://community.canvaslms.com/t5/Admin-Guide/How-do-I-obtain-an-API-access-token-in-the-Canvas-Data-Portal/ta-p/157' target='_blank'>official guide</a> from Canvas</p>
+		<h1>Organization domain</h1>
+		<p>Your organization domain is just the domain name of the site you use for canvas. For example, <code>browardschools.instructure.com</code> is a valid domain name. Do not include the <code>http://</code> or <code>https://</code> scheme and do not include any slashes.</p>
+	</div>
+</section>
+{% endblock %}

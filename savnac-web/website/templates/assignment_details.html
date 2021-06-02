@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}{{data['name']}}{% endblock %}
+{% block content %}
+<section id='assignment-details'>
+	<div class='container'>
+		<div class='row' style='padding-left: 20px; padding-right: 20px;'>
+			<div class='card' style='width: 1500px; height: auto; background: white;' onmouseover='this.style.background="white"' onmouseout='this.style.background="white"'>
+				<div style='text-align: left; color: #171a1d;'>
+					<h2><a href='https://{{current_user.domain}}/courses/{{course_id}}/assignments/{{data["id"]}}' target='_blank' style='color: #171a1d;'>{{data['name']}}<a></h2>
+					<h5><b>Due: </b>{{due_date}}</h5>
+					<h5><b>Status: </b>{{data['submission']['workflow_state'].title()}}</h5>
+					<h5><b>Grade: </b>{{data['submission']['score']}}/{{data['points_possible']}}</h5>
+					<p>{{data["description"]}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
