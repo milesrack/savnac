@@ -6,7 +6,7 @@ A command line tool to view assignments and announcements for [Canvas](https://g
 ## :pushpin: Installation
 ```
 git clone https://github.com/MC-Software-Solutions/savnac.git
-cd savnac
+cd savnac/savnac-cli/
 pip3 install -r requirements.txt
 ```
 
