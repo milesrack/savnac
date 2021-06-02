@@ -5,7 +5,7 @@ Source code for [savnac.xyz](http://www.savnac.xyz)
 
 ## :pushpin: Installation
 ```
-git clone https://github.com/MC-Software-Solutions/savnac.git
+git clone https://github.com/acik-software/savnac.git
 cd savnac/savnac-web/
 pip3 install -r requirements.txt
 ```
